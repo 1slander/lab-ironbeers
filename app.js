@@ -1,6 +1,7 @@
 const express = require('express');
 
 const hbs = require('hbs');
+const { get } = require('https');
 const path = require('path');
 const PunkAPIWrapper = require('punkapi-javascript-wrapper');
 
@@ -27,6 +28,14 @@ app.get('/beers', async (req, res) => {
   const beer = { beers: await punkAPI.getBeers() };
   res.render('beers.hbs', beer);
 });
+
+app.get('/beers/:id',async (req,res)=>{
+  let beerId=req.params.id;
+  console.log(beerId);
+  const getBeerId= await punkAPI.getBeer(beerId);
+  res.render('partials/beerpartial',getBeerId[0])
+  console.log(getBeerId[0])
+})
 
 app.get('/random-beer',async (req,res)=>{
   const randomBeers= {beer:await punkAPI.getRandom()};
