@@ -25,21 +25,36 @@ app.get('/', (req, res) => {
 });
 
 app.get('/beers', async (req, res) => {
-  const beer = { beers: await punkAPI.getBeers() };
-  res.render('beers.hbs', beer);
+  try{
+    const beer = { beers: await punkAPI.getBeers() };
+    res.render('beers.hbs', beer);
+  }
+  catch {
+    (error => console.log(error))
+  }
 });
 
 app.get('/beers/:id',async (req,res)=>{
-  let beerId=req.params.id;
-  console.log(beerId);
-  const getBeerId= await punkAPI.getBeer(beerId);
-  res.render('partials/beerpartial',getBeerId[0])
-  console.log(getBeerId[0])
+  try{
+    let beerId=req.params.id;
+    //console.log(beerId);
+    const getBeerId= await punkAPI.getBeer(beerId);
+    res.render('partials/beerpartial',getBeerId[0])
+    //console.log(getBeerId[0])
+
+  }
+  catch {
+    (error => console.log(error))
+  }
 })
 
 app.get('/random-beer',async (req,res)=>{
-  const randomBeers= {beer:await punkAPI.getRandom()};
-  res.render('random-beer.hbs',randomBeers)
+  try{
+    const randomBeers= {beer:await punkAPI.getRandom()};
+    res.render('random-beer.hbs',randomBeers)
+  }
+  catch {(error => console.log(error))
+  }
 })
 // app.get('/random-beer', (req,res)=>{
   
